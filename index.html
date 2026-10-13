@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Totality Live Control | App per Streamer TikTok e Twitch</title>
+    
+    <!-- SEO Base -->
+    <meta name="description" content="Il miglior software desktop nativo per gestire le tue live su TikTok e Twitch. Alert, giochi interattivi 3D, bot vocale TTS e contatori in un unico pannello.">
+    <meta name="keywords" content="software streaming, bot tiktok live, overlay twitch, giochi interattivi chat, tts live, totality live control, app per streamer, subathon timer">
+    <meta name="author" content="D.L. Interactive Gamestudio">
+    <link rel="canonical" href="https://totalitylivecontrol.netlify.app/" />
+    
+    <!-- Open Graph SEO (Discord, Facebook, WhatsApp) -->
+    <meta property="og:title" content="Totality Live Control | Il pannello definitivo per Streamer">
+    <meta property="og:description" content="Gestisci live su TikTok e Twitch: giochi interattivi 3D, bot vocale TTS, alert e overlay in un'unica app desktop senza latenza.">
+    <meta property="og:image" content="https://totalitylivecontrol.netlify.app/img/dashboard.png">
+    <meta property="og:url" content="https://totalitylivecontrol.netlify.app/">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card SEO (Per condivisioni su X/Twitter) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Totality Live Control | App per Streamer">
+    <meta name="twitter:description" content="Gestisci le tue live su TikTok e Twitch con giochi interattivi 3D, TTS e alert in un'unica app desktop.">
+    <meta name="twitter:image" content="https://totalitylivecontrol.netlify.app/img/dashboard.png">
+    
+    <!-- Dati Strutturati JSON-LD (Software) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Totality Live Control",
+      "operatingSystem": "Windows",
+      "applicationCategory": "MultimediaApplication",
+      "author": {
+        "@type": "Organization",
+        "name": "D.L. Interactive Gamestudio"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "EUR"
+      },
+      "description": "Software desktop per gestire live su TikTok e Twitch con giochi interattivi 3D, TTS e alert integrati."
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <!-- STILE FORZATO PER MENU E MOBILE (Scavalca i conflitti del file CSS vecchio) -->
+    <style>
+        /* Fissa la barra in alto */
+        body { padding-top: 70px; overflow-x: hidden; }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(10, 10, 15, 0.98);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 10000;
+            box-sizing: border-box;
+            border-bottom: 1px solid rgba(0, 229, 255, 0.1);
+        }
+
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 6px;
+            z-index: 10001;
+        }
+
+        .hamburger span {
+            width: 30px;
+            height: 3px;
+            background-color: #00e5ff;
+            border-radius: 3px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* REGOLE SPECIFICHE PER I TELEFONI */
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            
+            /* Il menu fuori dallo schermo a destra */
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%; 
+                width: 100%;
+                height: 100vh;
+                background: rgba(10, 10, 15, 0.98);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Scivolamento fluido */
+                z-index: 10000;
+            }
+            
+            /* Classe che il Javascript attiva per farlo entrare */
+            .nav-links.active { right: 0; }
+            
+            .nav-links a { font-size: 1.5rem; margin: 10px 0; }
+            .nav-links .download-btn { font-size: 1.3rem; padding: 15px 30px; margin-top: 20px; }
+
+            /* Animazione della X */
+            .hamburger.toggle span:nth-child(1) { transform: rotate(-45deg) translate(-6px, 6px); }
+            .hamburger.toggle span:nth-child(2) { opacity: 0; }
+            .hamburger.toggle span:nth-child(3) { transform: rotate(45deg) translate(-6px, -6px); }
+
+            /* Aggiustamenti generali griglie per mobile */
+            .hero { flex-direction: column; text-align: center; padding: 1rem; }
+            .hero-content { max-width: 100%; }
+            .hero-image { width: 100%; margin-top: 2rem; }
+            .main-title { font-size: 2.2rem; line-height: 1.2; }
+            .grid, .why-grid, .pricing-grid { grid-template-columns: 1fr; gap: 20px; padding: 0 1rem; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 0 1rem; }
+            .eula-container { padding: 1.5rem; }
+        }
+
+        @media (max-width: 480px) {
+            .main-title { font-size: 1.8rem; }
+            .gallery-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span style="color: #fff; font-weight: bold; font-size: 1.2rem; letter-spacing: 1px;">TOTALITY<span style="color: #00e5ff;">LIVE<span style="color: #fff; font-weight: bold; font-size: 1.2rem; letter-spacing: 1px;">CONTROL<span</span></span>
+        </div>
+        
+        <!-- Il pulsante Hamburger -->
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        
+        <!-- I link del menu -->
+        <div class="nav-links" id="nav-links">
+            <a href="#cosa-puoi-fare">Cosa puoi fare</a>
+            <a href="#galleria">Anteprima</a>
+            <a href="#perche">Perché sceglierla</a>
+            <a href="#prezzi">Prezzi</a>
+            <a href="#eula">EULA & Privacy</a>
+            <a href="https://github.com/longsky52/Totality-App/releases/download/v1.0.0/Installa_Totality.exe" class="download-btn">Scarica l'App</a>
+        </div>
+    </nav>
+
+    <!-- MAIN racchiude il contenuto per la SEO semantica -->
+    <main>
+        <!-- 1. HERO CON ICONA E IMMAGINE DASHBOARD -->
+        <header class="hero">
+            <div class="hero-content">
+                <img src="img/icon.png" alt="Totality Live Control Logo" class="hero-logo">
+                <h1 class="main-title gradient-text">TOTALITY LIVE CONTROL</h1>
+                <p>Porta le tue live a un livello superiore. Un pannello "all-in-one" per gestire tutto: non avrai bisogno di nient'altro.</p>
+            </div>
+            <div class="hero-image">
+                <img src="img/dashboard.png" alt="Anteprima Dashboard Totality Live Control" class="dashboard-mockup">
+            </div>
+        </header>
+
+        <!-- 2. COSA PUOI FARE -->
+        <section id="cosa-puoi-fare" class="features">
+            <h2 class="gradient-text">Cosa puoi fare con Totality Live Control?</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Alert Audio e Video</h3>
+                    <p>Imposta alert audio e video per la tua live in maniera semplicissima e intuitiva.</p>
+                </div>
+                <div class="card">
+                    <h3>Overlay e Contatori</h3>
+                    <p>Tantissimi overlay a tua disposizione, inclusi i contatori in tempo reale per like, follow e molto altro.</p>
+                </div>
+                <div class="card">
+                    <h3>Frame Fotocamera</h3>
+                    <p>Arricchisci la tua webcam con frame personalizzati e overlay creati appositamente per la tua camera.</p>
+                </div>
+                <div class="card">
+                    <h3>Lettura Chat Vocale</h3>
+                    <p>Un bot vocale integrato (TTS) per la lettura automatica della chat, così non ti perderai mai un messaggio.</p>
+                </div>
+                <div class="card">
+                    <h3>Timer Maratona</h3>
+                    <p>Gestisci le tue Subathon e live infinite con un timer per la maratona completamente personalizzabile.</p>
+                </div>
+                <div class="card">
+                    <h3>Tabelle Interattive</h3>
+                    <p>Un potente generatore di tabelle interattive da compilare e inserire in tempo reale nelle tue dirette.</p>
+                </div>
+                <div class="card">
+                    <h3>Video Intro Maker</h3>
+                    <p>Genera spettacolari video di intro direttamente all'interno dell'app, pronti per essere trasmessi.</p>
+                </div>
+                <div class="card">
+                    <h3>Server Minecraft</h3>
+                    <p>Strumenti di integrazione e supporto dedicati per gestire gli eventi sul tuo Server Minecraft.</p>
+                </div>
+                <div class="card">
+                    <h3>...E Tanto Altro</h3>
+                    <p>Funzionalità in continuo aggiornamento: integrazioni API, nuovi mini-giochi e strumenti unici per la tua live.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. GALLERIA FOTOGRAFICA -->
+        <section id="galleria" class="gallery-section">
+            <h2 class="gradient-text">Anteprima dell'App</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="img/1.png" alt="Pannello principale Totality Live"></div>
+                <div class="gallery-item"><img src="img/2.png" alt="Impostazioni grafiche per streamer"></div>
+                <div class="gallery-item"><img src="img/3.png" alt="Setup chat vocale TTS"></div>
+                <div class="gallery-item"><img src="img/4.png" alt="Timer maratona e subathon"></div>
+                <div class="gallery-item"><img src="img/5.png" alt="Gestione eventi interattivi"></div>
+                <div class="gallery-item"><img src="img/6.png" alt="Alert video personalizzati"></div>
+                <div class="gallery-item"><img src="img/7.png" alt="Dashboard statistiche streaming"></div>
+                <div class="gallery-item"><img src="img/8.png" alt="Pannello di controllo Twitch e TikTok"></div>
+                <div class="gallery-item"><img src="img/9.png" alt="Mini gioco 3D chat interattiva"></div>
+                <div class="gallery-item"><img src="img/10.png" alt="Sumo arena per chat Twitch"></div>
+                <div class="gallery-item"><img src="img/11.png" alt="Integrazione eventi TikTok Live"></div>
+            </div>
+        </section>
+
+        <!-- 4. PERCHÉ SCEGLIERLA -->
+        <section id="perche" class="why-us">
+            <h2 class="gradient-text">Perché sceglierla?</h2>
+            <div class="why-grid">
+                <div class="why-item">
+                    <div class="why-icon">🚀</div>
+                    <div>
+                        <h3>Software Nativo Desktop</h3>
+                        <p>Non è un semplice sito web. È un'app ottimizzata che sfrutta la potenza del tuo PC per garantire zero latenza e fluidità totale mentre stremmi su TikTok o Twitch.</p>
+                    </div>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">🔒</div>
+                    <div>
+                        <h3>Licenza Sicura e Personale</h3>
+                        <p>Il tuo account è protetto e vincolato al tuo hardware ID. Niente accessi non autorizzati, solo la massima stabilità per le tue dirette.</p>
+                    </div>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">🎨</div>
+                    <div>
+                        <h3>100% Personalizzabile</h3>
+                        <p>Dalle grafiche in overlay fino alle regole dei giochi interattivi, hai il controllo totale su ogni dettaglio dell'esperienza visiva.</p>
+                    </div>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">🎧</div>
+                    <div>
+                        <h3>Supporto in Italiano</h3>
+                        <p>Nessun bot straniero o traduzioni approssimative. Hai a disposizione un'assistenza diretta e veloce completamente in italiano per qualsiasi necessità.</p>
+                    </div>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">🔄</div>
+                    <div>
+                        <h3>App in Continua Evoluzione</h3>
+                        <p>Non rimani mai indietro. Rilasciamo costantemente nuovi aggiornamenti, aggiungendo funzioni sempre più avanzate per mantenere la tua live al top.</p>
+                    </div>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">🕹️</div>
+                    <div>
+                        <h3>Esplosione dell'Engagement</h3>
+                        <p>Sfrutta i nostri mini-giochi interattivi progettati appositamente per far partecipare la chat e aumentare drasticamente l'engagement e le interazioni del tuo canale.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. PREZZI AGGIORNATI -->
+        <section id="prezzi" class="pricing-section">
+            <h2 class="gradient-text">Scegli il piano adatto a te</h2>
+            <p style="text-align: center; color: var(--text-muted); margin-bottom: 3rem; font-size: 1.1rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+                Tutti i prezzi sono finali e senza sorprese. Operazione in franchigia da IVA ai sensi della L. 190/2014 (Regime Forfettario).
+            </p>
+            
+            <div class="pricing-grid" style="max-width: 1200px;">
+                <!-- 1. Scheda Free -->
+                <div class="pricing-card free-tier">
+                    <h3>Versione Free</h3>
+                    <div class="price">Gratis<span></span></div>
+                    <p>Nessun obbligo. Scarica l'app e inizia subito. Funzionalità di base incluse per sempre, senza nessun abbonamento.</p>
+                    <a href="https://github.com/longsky52/Totality-App/releases/download/v1.0.0/Installa_Totality.exe" class="cta-button-cyan">Inizia Subito</a>
+                </div>
+
+                <!-- 2. Scheda Base -->
+                <div class="pricing-card pro-tier">
+                    <h3>Piano Pro</h3>
+                    <div class="price">da 10€<span> / mese</span></div>
+                    <ul style="list-style: none; color: var(--text-muted); margin-bottom: 1.5rem; text-align: left; padding: 0 1rem; line-height: 2;">
+                        <li>✅ Solo piattaforma <strong>TikTok</strong></li>
+                        <li>✅ Integrazione <strong>Server Minecraft</strong></li>
+                        <li>❌ <span style="text-decoration: line-through; opacity: 0.5;">Giochi Interattivi</span></li>
+                    </ul>
+                    <div style="font-size: 0.95rem; color: var(--text-main); margin-bottom: 2rem; background: rgba(255, 255, 255, 0.05); padding: 10px; border-radius: 8px;">
+                        <strong>1 Mese:</strong> 10€ <br>
+                        <strong>6 Mesi:</strong> 50€ <br>
+                        <strong>1 Anno:</strong> 100€
+                    </div>
+                    <span class="info-badge">Gestito tramite Polar</span>
+                </div>
+
+                <!-- 3. Scheda Completa -->
+                <div class="pricing-card pro-tier" style="border-color: var(--accent-red); box-shadow: 0 10px 30px rgba(255, 66, 77, 0.1);">
+                    <h3>Piano Pro+</h3>
+                    <div class="price">da 15€<span> / mese</span></div>
+                    <ul style="list-style: none; color: var(--text-muted); margin-bottom: 1.5rem; text-align: left; padding: 0 1rem; line-height: 2;">
+                        <li>✅ Multistreaming: <strong>TikTok + Twitch</strong></li>
+                        <li>✅ Integrazione <strong>Server Minecraft</strong></li>
+                        <li>✅ Tutti i <strong>Giochi Interattivi</strong></li>
+                    </ul>
+                    <div style="font-size: 0.95rem; color: var(--text-main); margin-bottom: 2rem; background: rgba(255, 66, 77, 0.1); padding: 10px; border-radius: 8px; border: 1px solid rgba(255, 66, 77, 0.3);">
+                        <strong>1 Mese:</strong> 15€ <br>
+                        <strong>6 Mesi:</strong> 75€ <br>
+                        <strong>1 Anno:</strong> 150€
+                    </div>
+                    <span class="info-badge">Gestito tramite Polar</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. EULA & PRIVACY POLICY -->
+        <section id="eula" class="eula-section">
+            <h2 class="gradient-text">EULA & Privacy</h2>
+            <div class="eula-container">
+                <strong>Contratto di Licenza per l'Utente Finale (EULA) - Totality Live Control</strong>
+                <p>Scaricando, installando o utilizzando Totality Live Control, accetti di essere vincolato dai presenti termini. Se non accetti i termini di questo accordo, non puoi utilizzare o scaricare il software.</p>
+                <br>
+                <strong>1. Concessione della Licenza</strong>
+                <p>D.L. Interactive Gamestudio ti concede un diritto e una licenza limitata, personale, non esclusiva, non trasferibile e non sub-licenziabile per installare e utilizzare il Software sui dispositivi compatibili per il tuo intrattenimento personale. Il Software viene concesso in licenza, non venduto. Questa licenza è strettamente vincolata al tuo Hardware ID. Qualsiasi tentativo di aggirare, alterare o condividere la licenza tra più macchine comporterà l'annullamento immediato della stessa senza diritto a rimborsi.</p>
+                <br>
+                <strong>2. Condizioni di Utilizzo e Limitazioni</strong>
+                <p>Non è consentito: (a) copiare, riprodurre, distribuire, mostrare o utilizzare il software in un modo non espressamente autorizzato; (b) vendere, affittare, noleggiare, concedere in licenza o trasferire in altro modo il software; (c) decodificare (reverse engineering), ricavare il codice sorgente, modificare, adattare, tradurre, decompilare, disassemblare o creare lavori derivati basati sul Software; (d) rimuovere, disabilitare, aggirare o modificare qualsiasi avviso proprietario o tecnologia di sicurezza inclusa. La violazione di uno di questi punti comporterà la sospensione immediata e irrevocabile dell'account e l'eventuale segnalazione alle autorità competenti.</p>
+                <br>
+                <strong>3. Gestione Pagamenti, Transazioni e Partner di Pagamento (Polar)</strong>
+                <p>Tutti i pagamenti, i rinnovi di abbonamento e le transazioni relative ai Piani Premium vengono elaborati e gestiti interamente e in totale sicurezza attraverso la piattaforma di terze parti <strong>Polar (polar.sh)</strong>, che funge da merchant e gestore autorizzato dei pagamenti. D.L. Interactive Gamestudio non raccoglie, archivia o elabora direttamente alcun dato finanziario o carta di credito sui propri server o su questo sito web. Eventuali richieste, contestazioni o rimborsi relativi a transazioni e pagamenti sono regolati in via esclusiva dai termini del servizio di Polar.</p>
+                <br>
+                <strong>4. Esclusione di Garanzie ("Così com'è")</strong>
+                <p>D.L. Interactive Gamestudio fornisce il Software su base "così com'è" e "come disponibile". L'utilizzo dell'applicazione avviene a tuo completo rischio. D.L. Interactive Gamestudio non sarà ritenuta responsabile per eventuali perdite di dati, blocchi delle dirette streaming, danni hardware o altre conseguenze derivanti dall'uso del Software.</p>
+                
+                <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 2rem 0;">
+                
+                <strong style="color: var(--accent-cyan);">Informativa sulla Privacy & Cookie Policy (No-Tracking)</strong>
+                <p>La tutela della tua privacy è assoluta. Questo sito web (la landing page di Totality Live Control) è progettato esclusivamente per scopi informativi e promozionali. Di conseguenza:
+                <br><br>
+                - <strong>Non utilizziamo cookie di tracciamento</strong>, non facciamo profilazione pubblicitaria e non utilizziamo strumenti per monitorare la tua navigazione.<br>
+                - <strong>Non vendiamo i tuoi dati</strong> a terze parti.</p>
+                <br>
+                <p>Inoltre, l'applicazione <strong>Totality Live Control</strong> è costruita con il principio della massima riservatezza. L'accesso all'App avviene tramite un database sicuro, ma <strong>ti chiederemo esclusivamente di creare uno Username di fantasia</strong>. Non ti chiederemo MAI la tua email, il tuo numero di telefono o il tuo vero nome per registrarti. Username e Password, essendo di fantasia, non contengono alcun dato personale.</p>
+                <br>
+                <p>L'app lavora completamente in locale sul tuo computer. Tutte le tue impostazioni, grafiche e preferenze vengono salvate esclusivamente sul tuo PC, garantendoti zero latenza e il controllo totale. Gli unici dati comunicati ai nostri server riguardano la verifica della licenza. <strong>Essendo il tuo Hardware ID l'unico dato tecnico potenzialmente riconducibile alla tua macchina fisica, viene salvato in maniera rigorosamente crittografata con standard di altissima sicurezza: nessuno potrà mai leggerlo in chiaro. L'accesso a questi registri è strettamente riservato al nostro staff tecnico, ed è finalizzato unicamente alla fornitura di assistenza in caso di problemi con la tua licenza.</strong></p>
+            </div>
+        </section>
+
+        <!-- 7. COMMUNITY E SUPPORTO -->
+        <section id="community" style="text-align: center; padding: 4rem 2rem; background: rgba(0, 229, 255, 0.05); border-top: 1px solid rgba(0, 229, 255, 0.2); border-bottom: 1px solid rgba(0, 229, 255, 0.2); margin-top: 3rem; margin-bottom: 3rem;">
+            <h2 class="gradient-text">Hai bisogno di aiuto? Unisciti a noi!</h2>
+            <p style="color: var(--text-muted); max-width: 600px; margin: 1rem auto 2rem auto; line-height: 1.6; font-size: 1.1rem;">
+                Non sei mai solo. Entra nel nostro server Discord ufficiale per ricevere assistenza diretta, parlare con gli sviluppatori o confrontarti con gli altri streamer della community di Totality.
+            </p>
+            <a href="https://discord.gg/a2H85VT7P2" target="_blank" class="cta-button-cyan" style="display: inline-block; padding: 15px 30px; font-size: 1.2rem; font-weight: bold; box-shadow: 0 10px 30px rgba(0, 229, 255, 0.2);">
+                💬 Entra nel Server Discord
+            </a>
+        </section>
+    </main>
+
+    <!-- FOOTER CON MENU A COMPARSA PER DATI LEGALI -->
+    <footer>
+        <p>Totality Live Control di Luciano Antonino Zappalà &middot; P. IVA 06171360875 &middot; <a href="#" id="toggle-legal" style="color: var(--text-muted); text-decoration: underline;">Dati legali e sede</a></p>
+        <p style="margin-top: 10px; font-size: 0.8rem;">&copy; 2026 D.L. Interactive Gamestudio. Tutti i diritti riservati.</p>
+        
+        <div id="legal-box" style="display: none; margin-top: 15px; font-size: 0.85rem; color: var(--text-muted); background: var(--card-bg); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); max-width: 400px; margin-left: auto; margin-right: auto; text-align: center;">
+            <strong>D.L. Interactive Gamestudio</strong><br>
+            Sede Operativa: Via Gaetano Donizzetti 3 A , 95126 Catania (CT), Italia<br>
+            Email Legale: total_live_control@libero.it<br>
+            <strong style="color: var(--accent-cyan); display: block; margin-top: 10px;">Assistenza clienti: <a href="https://discord.gg/a2H85VT7P2" target="_blank" style="color: var(--accent-cyan); text-decoration: underline;">Server Discord</a></strong>
+        </div>
+    </footer>
+
+    <!-- FINESTRA MODALE PER ZOOM IMMAGINI -->
+    <div id="lightbox" class="lightbox">
+        <span class="close-lightbox">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+    </div>
+
+    <!-- SCRIPT -->
+    <script>
+        // Logica Zoom immagini
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const images = document.querySelectorAll('.gallery-item img');
+        const closeBtn = document.querySelector('.close-lightbox');
+
+        images.forEach(img => {
+            img.addEventListener('click', () => {
+                lightbox.style.display = 'flex';
+                lightboxImg.src = img.src;
+            });
+        });
+
+        closeBtn.addEventListener('click', () => {
+            lightbox.style.display = 'none';
+        });
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target !== lightboxImg) {
+                lightbox.style.display = 'none';
+            }
+        });
+
+        // Logica Menu Dati Legali
+        const toggleLegalBtn = document.getElementById('toggle-legal');
+        const legalBox = document.getElementById('legal-box');
+
+        toggleLegalBtn.addEventListener('click', (e) => {
+            e.preventDefault(); 
+            if (legalBox.style.display === 'none') {
+                legalBox.style.display = 'block';
+            } else {
+                legalBox.style.display = 'none';
+            }
+        });
+
+       // Logica Hamburger Menu Mobile (Migliorata e Blindata)
+       const hamburger = document.getElementById('hamburger');
+       const navLinks = document.getElementById('nav-links');
+
+       hamburger.addEventListener('click', () => {
+           navLinks.classList.toggle('active');
+           hamburger.classList.toggle('toggle');
+       });
+
+       // Chiude il menu quando clicchi su una qualsiasi voce
+       document.querySelectorAll('.nav-links a').forEach(link => {
+           link.addEventListener('click', () => {
+               navLinks.classList.remove('active');
+               hamburger.classList.remove('toggle');
+           });
+       });
+    </script>
+</body>
+</html>
